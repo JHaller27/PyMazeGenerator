@@ -2,10 +2,14 @@ from enum import Enum
 
 
 class DIRECTION(int, Enum):
-    EAST = 0
-    NORTH = 1
-    WEST = 2
-    SOUTH = 3
+    EAST = -1
+    WEST = 1
+    NORTH = -2
+    SOUTH = 2
+
+    @property
+    def invert(self) -> 'DIRECTION':
+        return DIRECTION(-self)
 
 
 class Cell:
