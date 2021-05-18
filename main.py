@@ -1,6 +1,7 @@
 import random
 
 from sidewinder import carve_maze
+from dijkstra import map_maze
 from maze import Maze, print_maze
 
 
@@ -21,6 +22,9 @@ def main(size: int, seed: int = None):
 
     # Carve paths through the maze, and pretty-print result
     carve_maze(maze)
+
+    # Find the distance to all cells
+    map_maze(maze)
     print_maze(maze, print_hex)
 
 
