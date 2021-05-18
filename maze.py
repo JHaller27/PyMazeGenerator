@@ -118,9 +118,12 @@ class Maze:
 
 def print_maze(maze: Maze, str_func = str):
     # Straight bars
-    H_LINE = '────'
+    H_FLAT = '─'
+    V_FLAT = '│'
+
+    H_LINE = H_FLAT * 4
     H_OPEN = '    '
-    V_LINE = '│'
+    V_LINE = V_FLAT * 1
     V_OPEN = ' '
 
     # Bends
@@ -150,13 +153,19 @@ def print_maze(maze: Maze, str_func = str):
                     top_line += TOP_LEFT
                 # ...some middle col
                 else:
-                    top_line += TOP_MIDDLE
+                    if maze[ridx, cidx][DIRECTION.WEST] is None:
+                        top_line += TOP_MIDDLE
+                    else:
+                        top_line += H_FLAT
 
             # ...some middle row
             else:
                 # ...first col
                 if cidx == 0:
-                    top_line += LEFT_MIDDLE
+                    if maze[ridx, cidx][DIRECTION.NORTH] is None:
+                        top_line += LEFT_MIDDLE
+                    else:
+                        top_line += V_FLAT
                 # ...some middle col
                 else:
                     top_line += MIDDLE_CROSS
@@ -174,7 +183,10 @@ def print_maze(maze: Maze, str_func = str):
             top_line += TOP_RIGHT
         # ...some middle col
         else:
-            top_line += RIGHT_MIDDLE
+            if maze[ridx, -1][DIRECTION.NORTH] is None:
+                top_line += RIGHT_MIDDLE
+            else:
+                top_line += V_FLAT
 
         # Right-most vertical bar of row
         cell_line += V_LINE if cell.wall(DIRECTION.EAST) else V_OPEN
@@ -190,7 +202,10 @@ def print_maze(maze: Maze, str_func = str):
             bottom_line += BOTTOM_LEFT
         # ...some middle col
         else:
-            bottom_line += BOTTOM_MIDDLE
+            if maze[-1, cidx][DIRECTION.WEST] is None:
+                bottom_line += BOTTOM_MIDDLE
+            else:
+                bottom_line += H_FLAT
 
         # Vertical bars
         bottom_line += H_LINE if cell.wall(DIRECTION.SOUTH) else H_OPEN
