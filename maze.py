@@ -79,13 +79,13 @@ class Maze:
             self[row, col].set_neighbor(DIRECTION.EAST, self[row, col + 1])
 
         elif dir == DIRECTION.NORTH:
-            self[row, col].set_neighbor(DIRECTION.NORTH, self[row, col - 1])
+            self[row, col].set_neighbor(DIRECTION.NORTH, self[row - 1, col])
 
         elif dir == DIRECTION.WEST:
             self[row, col].set_neighbor(DIRECTION.WEST, self[row, col - 1])
 
         elif dir == DIRECTION.SOUTH:
-            self[row, col].set_neighbor(DIRECTION.SOUTH, self[row, col + 1])
+            self[row, col].set_neighbor(DIRECTION.SOUTH, self[row + 1, col])
 
         else:
             raise ValueError(f"Direction {dir} not recognized for Maze.carve")
