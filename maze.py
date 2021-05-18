@@ -66,20 +66,6 @@ class Maze:
 
         self._cells = [[Cell(fill_func(r, c)) for c in range(height)] for r in range(width)]
 
-        # Link cells with neighbors
-
-        # Link all rows east-to-west
-        for r in range(self._height):
-            for c in range(self._width - 1):
-                self._cells[r][c][DIRECTION.EAST] = self._cells[r][c+1]
-                self._cells[r][c+1][DIRECTION.WEST] = self._cells[r][c]
-
-        # Link all columns north-to-south
-        for c in range(self._width):
-            for r in range(self._height - 1):
-                self._cells[r][c][DIRECTION.SOUTH] = self._cells[r+1][c]
-                self._cells[r+1][c][DIRECTION.NORTH] = self._cells[r][c]
-
     def __getitem__(self, coords):
         if len(coords) == 1:
             row, = coords
