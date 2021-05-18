@@ -128,17 +128,35 @@ class Maze:
 
 def print_maze(maze: Maze, str_func = str):
     H_LINE = '----'
+    H_OPEN = '    '
     V_LINE = '|'
+    V_OPEN = ' '
     BEND = '+'
 
-    H_SEP = f'{BEND}{H_LINE}' * maze.width + BEND
-    ROW_FMT = f'{V_LINE}{{:^4}}' * maze.width + V_LINE
+    rows = maze.rows
+    for row in rows:
+        top_line = ''
+        cell_line = ''
 
-    for row in maze.rows:
-        print(H_SEP)
-        s_row = [str_func(c.value) for c in row]
-        print(ROW_FMT.format(*s_row))
-    print(H_SEP)
+        for cell in row:
+            top_line += BEND
+            top_line += H_LINE if cell.wall(DIRECTION.NORTH) else H_OPEN
+
+            cell_line += V_LINE if cell.wall(DIRECTION.WEST) else V_OPEN
+            cell_line += f'{str_func(cell.value):^4}'
+
+        top_line += BEND
+        cell_line += V_LINE if cell.wall(DIRECTION.EAST) else V_OPEN
+
+        print(top_line)
+        print(cell_line)
+
+    bottom_line = BEND
+    for cell in rows[-1]:
+        bottom_line += H_LINE if cell.wall(DIRECTION.SOUTH) else H_OPEN
+        bottom_line += BEND
+
+    print(bottom_line)
 
 
 if __name__ == "__main__":
