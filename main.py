@@ -4,6 +4,8 @@ from sidewinder import carve_maze
 from dijkstra import map_maze
 from maze import Maze, print_maze
 
+import typer
+
 
 # Pretty-print maze-cell value as 2-digit hex
 def print_hex(val):
@@ -29,4 +31,4 @@ def main(size: int, seed: int = None):
 
 
 if __name__ == "__main__":
-    main(16)
+    typer.run(main)
