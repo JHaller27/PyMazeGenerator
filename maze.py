@@ -80,9 +80,12 @@ class Maze:
                 self._cells[r][c][DIRECTION.SOUTH] = self._cells[r+1][c]
                 self._cells[r+1][c][DIRECTION.NORTH] = self._cells[r][c]
 
-    def __getitem__(self, *coords):
-        row, col = coords
+    def __getitem__(self, coords):
+        if len(coords) == 1:
+            row, = coords
+            return self._cells[row]
 
+        row, col = coords
         return self._cells[row][col]
 
     @property
