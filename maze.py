@@ -88,6 +88,22 @@ class Maze:
         row, col = coords
         return self._cells[row][col]
 
+    def carve(self, row: int, col: int, dir: DIRECTION):
+        if dir == DIRECTION.EAST:
+            self[row, col].set_neighbor(DIRECTION.EAST, self[row, col + 1])
+
+        elif dir == DIRECTION.NORTH:
+            self[row, col].set_neighbor(DIRECTION.NORTH, self[row, col - 1])
+
+        elif dir == DIRECTION.WEST:
+            self[row, col].set_neighbor(DIRECTION.WEST, self[row, col - 1])
+
+        elif dir == DIRECTION.SOUTH:
+            self[row, col].set_neighbor(DIRECTION.SOUTH, self[row, col + 1])
+
+        else:
+            raise ValueError(f"Direction {dir} not recognized for Maze.carve")
+
     @property
     def height(self) -> int:
         return self._height
