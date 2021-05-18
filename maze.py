@@ -99,7 +99,7 @@ class Maze:
         return l
 
 
-def print_maze(maze: Maze):
+def print_maze(maze: Maze, str_func = str):
     H_LINE = '----'
     V_LINE = '|'
     BEND = '+'
@@ -109,11 +109,12 @@ def print_maze(maze: Maze):
 
     for row in maze.rows:
         print(H_SEP)
-        s_row = [str(c.value) for c in row]
+        s_row = [str_func(c.value) for c in row]
         print(ROW_FMT.format(*s_row))
     print(H_SEP)
 
 
 if __name__ == "__main__":
-    m = Maze(10, 10, lambda r, c: 0)
-    print_maze(m)
+    size = 16
+    m = Maze(size, size, lambda r, c: r * 0x10 + c)
+    print_maze(m, lambda v: f'{v:02X}')
