@@ -44,6 +44,10 @@ class Cell:
 
         return f'<{self.value} ({neighbors})>'
 
+    def set_neighbor(self, dir: DIRECTION, other: 'Cell'):
+        self[dir] = other
+        other[dir.invert] = self
+
 
 def default_fill_func(row: int, col: int):
     return str((row, col))
