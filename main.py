@@ -12,7 +12,7 @@ def print_hex(val):
     return f'{val:02X}'
 
 
-def main(size: int, seed: int = None):
+def main(size: int, seed: int = None, distances: bool = False):
     # Set+print random seed
     if seed is None:
         seed = random.randrange(100000)
@@ -26,8 +26,12 @@ def main(size: int, seed: int = None):
     carve_maze(maze)
 
     # Find the distance to all cells
-    map_maze(maze)
-    print_maze(maze, print_hex)
+    if distances:
+        map_maze(maze)
+        print_maze(maze, print_hex)
+
+    else:
+        print_maze(maze, lambda v: '')
 
 
 if __name__ == "__main__":
