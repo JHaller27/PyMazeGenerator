@@ -133,11 +133,37 @@ def print_maze(maze: Maze, str_func = str):
 
     LEFT_MIDDLE = '├'
     RIGHT_MIDDLE = '┤'
-    MIDDLE_CROSS = '┼'
 
     BOTTOM_LEFT = '└'
     BOTTOM_MIDDLE = '┴'
     BOTTOM_RIGHT = '┘'
+
+    # Middle crosses (for top-left corners)
+    bEast =  0b0001
+    bNorth = 0b0010
+    bWest =  0b0100
+    bSouth = 0b1000
+    CROSS_MAP = {
+        0b0000: ' ',  # Empty intersection
+        0b0001: '╶',  # E - East neighbor only
+        0b0010: '╵',  # N - North only
+        0b0011: '└',  # NE - North + East
+
+        0b0100: '╴',  # W
+        0b0101: '─',  # WE
+        0b0110: '┘',  # WN
+        0b0111: '┴',  # WNE
+
+        0b1000: '╷',  # S
+        0b1001: '┌',  # SE
+        0b1010: '│',  # SN
+        0b1011: '├',  # SNE
+
+        0b1100: '┐',  # SW
+        0b1101: '┬',  # SWE
+        0b1110: '┤',  # SWN
+        0b1111: '┼',  # SWNE
+    }
 
     rows = maze.rows
     for ridx, row in enumerate(rows):
@@ -168,7 +194,21 @@ def print_maze(maze: Maze, str_func = str):
                         top_line += V_FLAT
                 # ...some middle col
                 else:
-                    top_line += MIDDLE_CROSS
+                    cross_bit = 0b0000
+                    # Check cross's east
+                    if maze[ridx, cidx][DIRECTION.NORTH] is None:
+                        cross_bit |= bEast
+                    # Check cross's north
+                    if maze[ridx-1, cidx][DIRECTION.WEST] is None:
+                        cross_bit |= bNorth
+                    # Check cross's west
+                    if maze[ridx, cidx-1][DIRECTION.NORTH] is None:
+                        cross_bit |= bWest
+                    # Check cross's south
+                    if maze[ridx, cidx][DIRECTION.WEST] is None:
+                        cross_bit |= bSouth
+
+                    top_line += CROSS_MAP[cross_bit]
 
             # Top bar
             top_line += '────' if cell.wall(DIRECTION.NORTH) else H_OPEN
