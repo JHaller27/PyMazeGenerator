@@ -117,34 +117,86 @@ class Maze:
 
 
 def print_maze(maze: Maze, str_func = str):
-    H_LINE = '----'
+    # Straight bars
+    H_LINE = '────'
     H_OPEN = '    '
-    V_LINE = '|'
+    V_LINE = '│'
     V_OPEN = ' '
-    BEND = '+'
+
+    # Bends
+    TOP_LEFT = '┌'
+    TOP_MIDDLE = '┬'
+    TOP_RIGHT = '┐'
+
+    LEFT_MIDDLE = '├'
+    RIGHT_MIDDLE = '┤'
+    MIDDLE_CROSS = '┼'
+
+    BOTTOM_LEFT = '└'
+    BOTTOM_MIDDLE = '┴'
+    BOTTOM_RIGHT = '┘'
 
     rows = maze.rows
-    for row in rows:
+    for ridx, row in enumerate(rows):
         top_line = ''
         cell_line = ''
 
-        for cell in row:
-            top_line += BEND
-            top_line += H_LINE if cell.wall(DIRECTION.NORTH) else H_OPEN
+        for cidx, cell in enumerate(row):
+            # Top-left corner of cell
+            # ...first row
+            if ridx == 0:
+                # ...first col
+                if cidx == 0:
+                    top_line += TOP_LEFT
+                # ...some middle col
+                else:
+                    top_line += TOP_MIDDLE
 
+            # ...some middle row
+            else:
+                # ...first col
+                if cidx == 0:
+                    top_line += LEFT_MIDDLE
+                # ...some middle col
+                else:
+                    top_line += MIDDLE_CROSS
+
+            # Top bar
+            top_line += '────' if cell.wall(DIRECTION.NORTH) else H_OPEN
+
+            # Cell value + vertical bar
             cell_line += V_LINE if cell.wall(DIRECTION.WEST) else V_OPEN
             cell_line += f'{str_func(cell.value):^4}'
 
-        top_line += BEND
+        # Top-right of row
+        # ...first row
+        if ridx == 0:
+            top_line += TOP_RIGHT
+        # ...some middle col
+        else:
+            top_line += RIGHT_MIDDLE
+
+        # Right-most vertical bar of row
         cell_line += V_LINE if cell.wall(DIRECTION.EAST) else V_OPEN
 
         print(top_line)
         print(cell_line)
 
-    bottom_line = BEND
-    for cell in rows[-1]:
+    bottom_line = ''
+    for cidx, cell in enumerate(rows[-1]):
+        # Bottom-left of cells in last row
+        # ...first col
+        if cidx == 0:
+            bottom_line += BOTTOM_LEFT
+        # ...some middle col
+        else:
+            bottom_line += BOTTOM_MIDDLE
+
+        # Vertical bars
         bottom_line += H_LINE if cell.wall(DIRECTION.SOUTH) else H_OPEN
-        bottom_line += BEND
+
+    # Bottom-right of last cell in last row
+    bottom_line += BOTTOM_RIGHT
 
     print(bottom_line)
 
