@@ -1,12 +1,11 @@
 import random
 
-from starlette.responses import HTMLResponse
-
 from sidewinder import carve_maze
 from dijkstra import map_maze
 from maze import Maze, maze_to_str
 
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 
 
 app = FastAPI(name="Maze Generator")
