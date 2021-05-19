@@ -1,0 +1,11 @@
+---
+application:
+  name: "pymazegenerator"
+  project: "maze-generator"
+  organization: "QoveryCommunity"
+routers:
+- name: "main-pymazegenerator"
+  routes:
+  - application_name: "pymazegenerator"
+    paths:
+    - "/*"
