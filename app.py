@@ -13,9 +13,6 @@ from fastapi import FastAPI
 app = FastAPI(name="Maze Generator")
 
 
-def html_maze(m_str: str) -> str:
-    return f'<pre style="font-family: Consolas">\n{m_str}</pre>'
-
 
 @app.get('/sidewinder/{size}', response_class=HTMLResponse)
 def sidewinder(size: int, seed: int = None, distances: bool = False):
@@ -42,4 +39,4 @@ def sidewinder(size: int, seed: int = None, distances: bool = False):
 
     m_str += f'{seed=}'
 
-    return html_maze(m_str)
+    return f'<pre style="font-family: Consolas">\n{m_str}</pre>'
