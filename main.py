@@ -5,7 +5,6 @@ from starlette.responses import HTMLResponse
 from sidewinder import carve_maze
 from dijkstra import map_maze
 from maze import Maze, maze_to_str
-from main import print_hex
 
 from fastapi import FastAPI
 
@@ -41,7 +40,7 @@ def sidewinder(size: int, seed: int = None, distances: bool = False):
     # Find the distance to all cells
     if distances:
         map_maze(maze)
-        m_str += maze_to_str(maze, print_hex)
+        m_str += maze_to_str(maze, lambda v: f'{v:02X}')
 
     else:
         m_str += maze_to_str(maze, lambda v: '')
