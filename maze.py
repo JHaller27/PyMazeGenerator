@@ -116,7 +116,7 @@ class Maze:
         return l
 
 
-def print_maze(maze: Maze, str_func = str):
+def maze_to_str(maze: Maze, str_func = str):
     # Straight bars
     H_FLAT = '─'
     V_FLAT = '│'
@@ -164,6 +164,8 @@ def print_maze(maze: Maze, str_func = str):
         0b1110: '┤',  # SWN
         0b1111: '┼',  # SWNE
     }
+
+    out_str = ''
 
     rows = maze.rows
     for ridx, row in enumerate(rows):
@@ -231,8 +233,8 @@ def print_maze(maze: Maze, str_func = str):
         # Right-most vertical bar of row
         cell_line += V_LINE if cell.wall(DIRECTION.EAST) else V_OPEN
 
-        print(top_line)
-        print(cell_line)
+        out_str += top_line + '\n'
+        out_str += cell_line + '\n'
 
     bottom_line = ''
     for cidx, cell in enumerate(rows[-1]):
@@ -253,10 +255,13 @@ def print_maze(maze: Maze, str_func = str):
     # Bottom-right of last cell in last row
     bottom_line += BOTTOM_RIGHT
 
-    print(bottom_line)
+    out_str += bottom_line + '\n'
+
+    return out_str
 
 
 if __name__ == "__main__":
     size = 16
     m = Maze(size, size, lambda r, c: r * 0x10 + c)
-    print_maze(m, lambda v: f'{v:02X}')
+    m_str = maze_to_str(m, lambda v: f'{v:02X}')
+    print(m_str)

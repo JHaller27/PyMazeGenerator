@@ -2,7 +2,7 @@ import random
 
 from sidewinder import carve_maze
 from dijkstra import map_maze
-from maze import Maze, print_maze
+from maze import Maze, maze_to_str
 
 import typer
 
@@ -28,10 +28,12 @@ def main(size: int, seed: int = None, distances: bool = False):
     # Find the distance to all cells
     if distances:
         map_maze(maze)
-        print_maze(maze, print_hex)
+        m_str = maze_to_str(maze, print_hex)
 
     else:
-        print_maze(maze, lambda v: '')
+        m_str = maze_to_str(maze, lambda v: '')
+
+    print(m_str)
 
 
 if __name__ == "__main__":
