@@ -179,7 +179,7 @@ def print_maze(maze: Maze, str_func = str):
                     top_line += TOP_LEFT
                 # ...some middle col
                 else:
-                    if maze[ridx, cidx].wall(DIRECTION.WEST):
+                    if cell.wall(DIRECTION.WEST):
                         top_line += TOP_MIDDLE
                     else:
                         top_line += H_FLAT
@@ -188,7 +188,7 @@ def print_maze(maze: Maze, str_func = str):
             else:
                 # ...first col
                 if cidx == 0:
-                    if maze[ridx, cidx].wall(DIRECTION.NORTH):
+                    if cell.wall(DIRECTION.NORTH):
                         top_line += LEFT_MIDDLE
                     else:
                         top_line += V_FLAT
@@ -196,7 +196,7 @@ def print_maze(maze: Maze, str_func = str):
                 else:
                     cross_bit = 0b0000
                     # Check cross's east
-                    if maze[ridx, cidx].wall(DIRECTION.NORTH):
+                    if cell.wall(DIRECTION.NORTH):
                         cross_bit |= bEast
                     # Check cross's north
                     if maze[ridx-1, cidx].wall(DIRECTION.WEST):
@@ -205,7 +205,7 @@ def print_maze(maze: Maze, str_func = str):
                     if maze[ridx, cidx-1].wall(DIRECTION.NORTH):
                         cross_bit |= bWest
                     # Check cross's south
-                    if maze[ridx, cidx].wall(DIRECTION.WEST):
+                    if cell.wall(DIRECTION.WEST):
                         cross_bit |= bSouth
 
                     top_line += CROSS_MAP[cross_bit]
