@@ -13,8 +13,17 @@ from fastapi import FastAPI
 app = FastAPI(name="Maze Generator")
 
 
+@app.get('/', response_class=HTMLResponse)
+def home():
+    toc = {
+        "docs": "Docs",
+        "sidewinder?size=16": "Sidewinder"
+    }
+    algos_html_list = '\n'.join([f'<li><a href="./{k}">{v}</a></li>' for k,v in toc.items()])
+    return f'<h1>Table of Contents</h1><ul>{algos_html_list}</ul>'
 
-@app.get('/sidewinder/{size}', response_class=HTMLResponse)
+
+@app.get('/sidewinder', response_class=HTMLResponse)
 def sidewinder(size: int, seed: int = None, distances: bool = False):
     m_str = ""
 
